@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Mot de passe réinitialisé{% endblock %}
+{% block content %}
+<div class="card">
+    <div class="card-header bg-warning text-white">
+        <h4 class="mb-0">Mot de passe réinitialisé</h4>
+    </div>
+    <div class="card-body">
+        <p>Utilisateur : <strong>{{ user[2] }}</strong> (matricule : {{ user[1] }})</p>
+        <p>Nouveau mot de passe temporaire : <strong>{{ new_password }}</strong></p>
+        <p class="text-danger">Transmettez ce mot de passe à l'utilisateur. Il devra le changer à la prochaine connexion.</p>
+        <a href="/admin/utilisateurs" class="btn btn-secondary">Retour</a>
+    </div>
+</div>
+{% endblock %}

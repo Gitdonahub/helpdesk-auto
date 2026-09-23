@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Mon profil - TrustSolve{% endblock %}
+{% block content %}
+<h2>Mon profil</h2>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <p><strong>Matricule :</strong> {{ user[1] }}</p>
+        <p><strong>Nom complet :</strong> {{ user[2] }}</p>
+        <p><strong>Rôle :</strong> {{ user[4] }}</p>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">Changer mon mot de passe</h5>
+    </div>
+    <div class="card-body">
+        {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+        {% if message %}
+        <div class="alert alert-success">{{ message }}</div>
+        {% endif %}
+        <form method="post">
+            <div class="mb-3">
+                <label class="form-label">Mot de passe actuel</label>
+                <input type="password" name="current_password" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Nouveau mot de passe (8 caractères minimum)</label>
+                <input type="password" name="new_password" class="form-control" required minlength="8">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Confirmer le nouveau mot de passe</label>
+                <input type="password" name="confirm_password" class="form-control" required minlength="8">
+            </div>
+            <button type="submit" class="btn btn-primary">Modifier</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

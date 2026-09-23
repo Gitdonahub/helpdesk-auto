@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Inscription - TrustSolve{% endblock %}
+{% block content %}
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <h1 class="auth-title">Inscription</h1>
+        <p class="auth-subtitle">Créez votre compte pour accéder à la plateforme TrustSolve.</p>
+
+        {% if error %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+
+        <form method="post">
+
+            <div class="form-group">
+                <div class="input-group">
+                    <select name="user_sector" class="form-control" required>
+                        <option value="">Votre secteur / service</option>
+                        <option value="CAT">CAT</option>
+                        <option value="RSI">RSI</option>
+                        <option value="RH">RH</option>
+                        <option value="CNS">CNS</option>
+                        <option value="AIM">AIM</option>
+                    </select>
+                    <span class="input-icon">⚙️</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-wrapper">
+                    <input type="text" class="form-control" name="matricule" placeholder="Numéro matricule" required pattern="[0-9]{5}" title="Le matricule doit contenir 5 chiffres">
+                    <span class="input-icon">🪪</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-wrapper">
+                    <input type="text" class="form-control" name="full_name" placeholder="Nom complet" required>
+                    <span class="input-icon">👤</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-wrapper">
+                    <input type="text" class="form-control" name="invite_code" placeholder="Code d'invitation technicien (si technicien)">
+                    <span class="input-icon">🛡️</span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit">S'inscrire</button>
+        </form>
+
+        <div class="auth-footer">
+            <p>Déjà un compte ? <a href="/login">Se connecter</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

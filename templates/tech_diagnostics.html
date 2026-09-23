@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Tests diagnostic - TrustSolve{% endblock %}
+{% block content %}
+<h2>Tests diagnostic (espace technicien)</h2>
+<p>Lancez un diagnostic sur votre propre poste pour tester ou vérifier un problème sans créer de ticket.</p>
+
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">Choisir un type de diagnostic</h5>
+    </div>
+    <div class="card-body">
+        <form action="/tech/diagnostics/run" method="post">
+            <div class="mb-3">
+                <label class="form-label">Type de diagnostic :</label>
+                <select name="category" class="form-control" required>
+                    <option value="">-- Choisir --</option>
+                    <option value="reseau">Réseau (ping, DNS, passerelle)</option>
+                    <option value="imprimante">Imprimante (spooler, imprimante par défaut)</option>
+                    <option value="disque">Espace disque (libre, gros fichiers)</option>
+                    <option value="performance">Performance (CPU, mémoire, processus)</option>
+                    <option value="email">Messagerie / Outlook</option>
+                    <option value="microsoft365">Microsoft 365 / Office</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Description / note (optionnel) :</label>
+                <textarea name="description" rows="3" class="form-control"
+                          placeholder="Ex : Test après mise à jour Windows"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Lancer le diagnostic</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

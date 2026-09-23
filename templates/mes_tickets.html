@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Mes tickets - TrustSolve{% endblock %}
+{% block content %}
+    <h1>Mes tickets</h1>
+    <table>
+        <tr><th>ID</th><th>Description</th><th>Catégorie</th><th>Statut</th><th>Date</th><th>Action</th></tr>
+        {% for t in tickets %}
+        <tr>
+            <td>{{ t[0] }}</td>
+            <td>{{ t[3] }}</td>
+            <td>{{ t[4] }}</td>
+            <td>{{ t[5] }}</td>
+            <td>{{ t[6] }}</td>
+            <td><a href="/ticket/{{ t[0] }}">Voir</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p><a href="/" class="btn btn-secondary">Retour</a></p>
+{% endblock %}

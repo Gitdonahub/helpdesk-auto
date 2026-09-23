@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}{{ titre }} - TrustSolve{% endblock %}
+{% block content %}
+<h2>{{ titre }}</h2>
+<div class="card mb-3">
+    <div class="card-body">
+        <p><strong>Note :</strong> {{ description }}</p>
+        <p><strong>Exécuté par :</strong> {{ session['full_name'] }}</p>
+    </div>
+</div>
+
+<h4>Résultat complet</h4>
+<pre>{{ full_result }}</pre>
+
+<a href="/tech/diagnostics" class="btn btn-secondary">Relancer un autre test</a>
+<a href="/technicien" class="btn btn-primary">Retour aux tickets</a>
+{% endblock %}

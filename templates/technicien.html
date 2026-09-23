@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Espace technicien - TrustSolve{% endblock %}
+{% block content %}
+    <h1>Espace technicien</h1>
+    <div class="mb-3">
+        <a href="/tech/diagnostics" class="btn btn-primary">Lancer un test diagnostic sur ma machine</a>
+    </div>
+    <table>
+    <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Secteur</th>
+        <th>Description</th>
+        <th>Catégorie</th>
+        <th>Diagnostic</th>
+        <th>Statut</th>
+        <th>Date</th>
+        <th>Action</th>
+    </tr>
+    {% for t in tickets %}
+    <tr>
+        <td>{{ t[0] }}</td>
+        <td>{{ t[1] }}</td>
+        <td>{{ t[2] }}</td>
+        <td>{{ t[3] }}</td>
+        <td>{{ t[4] }}</td>
+        <td>
+            {% set diag = t[7] if t[7] else 'Pas encore de diagnostic' %}
+            <span title="{{ diag }}">{{ diag[:80] }}{% if diag|length > 80 %}...{% endif %}</span>
+        </td>
+        <td>{{ t[5] }}</td>
+        <td>{{ t[6] }}</td>
+        <td><a href="/ticket/{{ t[0] }}">Voir</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

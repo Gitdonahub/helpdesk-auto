@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Codes d'invitation - TrustSolve{% endblock %}
+{% block content %}
+<h2>Codes d'invitation technicien</h2>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="post">
+            <button type="submit" class="btn btn-primary">Générer un nouveau code</button>
+        </form>
+        {% if new_code %}
+        <div class="alert alert-success mt-3">
+            Nouveau code : <strong>{{ new_code }}</strong><br>
+            <small>Transmettez-le au nouveau technicien. Il ne sera plus affiché après rechargement.</small>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">Historique des codes</h5>
+    </div>
+    <div class="card-body">
+        {% if codes %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Code</th>
+                    <th>Utilisé</th>
+                    <th>Technicien</th>
+                    <th>Créé le</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in codes %}
+                <tr>
+                    <td>{{ c[0] }}</td>
+                    <td>{{ c[1] }}</td>
+                    <td>{{ 'Oui' if c[2] else 'Non' }}</td>
+                    <td>{{ c[4] if c[4] else '-' }}</td>
+                    <td>{{ c[3] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>Aucun code généré pour l'instant.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

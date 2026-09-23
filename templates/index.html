@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Accueil - TrustSolve{% endblock %}
+{% block content %}
+    <h1>TrustSolve</h1>
+    <p>Connecté en tant que : <strong>{{ session['username'] }}</strong> ({{ session['role'] }})</p>
+    <h2>Signaler un problème</h2>
+    <form action="/diagnostic" method="post">    
+        <label>Description du problème :</label><br>
+            <textarea name="description" rows="4" cols="50" placeholder="Ex : Je n'ai plus Internet, ou L'imprimante ne répond pas" required></textarea><br><br>
+            <input type="submit" value="Diagnostiquer">
+    </form>
+   
+    {% if session['role'] == 'tech' %}
+    <p><a href="/technicien">Espace technicien</a></p>
+    {% endif %}
+{% endblock %}

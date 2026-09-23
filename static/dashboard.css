@@ -1,0 +1,186 @@
+/* =============================================
+   TrustSolve - Dashboard & Contenu
+   ============================================= */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+body:not(:has(.auth-wrapper)) {
+  font-family: 'Inter', sans-serif;
+  background-color: #f8fafc;
+  color: #071a02;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #1e293b !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 12px 0;
+  margin-bottom: 30px;
+}
+
+/* =============================================
+   Alignement Navbar Horizontal & Responsive
+   ============================================= */
+
+/* Conteneur principal de la navbar */
+.navbar .container, 
+.navbar-container {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100%;
+}
+
+/* Alignement du Logo et Titre */
+.navbar-brand {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px;
+  text-decoration: none;
+  font-weight: 700;
+  color: #ffffff !important;
+  margin-right: 20px;
+}
+
+.navbar-logo {
+  height: 32px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Alignement HORIZONTAL du menu principal */
+.navbar-nav {
+  display: flex !important;
+  flex-direction: row !important; /* Force l'alignement horizontal */
+  align-items: center !important;
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  gap: 20px !important; /* Espacement entre les liens */
+}
+
+.navbar-nav .nav-item {
+  margin: 0 !important;
+}
+
+.navbar-nav .nav-link {
+  color: rgba(255, 255, 255, 0.8) !important;
+  text-decoration: none !important;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 6px 10px !important;
+  transition: color 0.2s ease;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #ffffff !important;
+}
+
+/* Alignement de la section Profil / Déconnexion */
+.navbar-user {
+  display: flex !important;
+  align-items: center !important;
+  gap: 15px;
+}
+
+.navbar-text {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-size: 0.9rem;
+}
+
+/* =============================================
+   Gestion Mobile (Passage en vertical si écran réduit)
+   ============================================= */
+@media (max-width: 768px) {
+  .navbar .container, 
+  .navbar-container {
+    flex-direction: column !important;
+    gap: 15px;
+  }
+
+  .navbar-nav {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 10px !important;
+  }
+}
+
+/* Tableaux (Mes tickets / Technicien) */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  margin: 20px 0;
+}
+
+th, td {
+  padding: 14px 18px;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 0.9rem;
+}
+
+th {
+  background-color: #f1f5f9;
+  color: #475569;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+tr:hover td {
+  background-color: #f8fafc;
+}
+
+/* Formulaires & Chat */
+input[type="text"], textarea, select {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  margin-top: 6px;
+  background-color: #ffffff;
+}
+
+input[type="submit"] {
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+input[type="submit"]:hover {
+  background-color: #4338ca;
+}
+
+.message-box {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 15px 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+pre {
+  background: #0f172a;
+  color: #f8fafc;
+  padding: 16px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  overflow-x: auto;
+}

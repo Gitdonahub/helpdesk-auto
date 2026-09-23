@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Utilisateurs - TrustSolve{% endblock %}
+{% block content %}
+<h2>Gestion des utilisateurs</h2>
+
+{% if message %}
+<div class="alert alert-success">{{ message }}</div>
+{% endif %}
+
+<div class="btn-group mb-3">
+    <a href="/admin/utilisateurs" class="btn {% if not role_filter %}btn-primary{% endif %}">Tous</a>
+    <a href="/admin/utilisateurs?role=user" class="btn {% if role_filter == 'user' %}btn-primary{% endif %}">Utilisateurs</a>
+    <a href="/admin/utilisateurs?role=tech" class="btn {% if role_filter == 'tech' %}btn-primary{% endif %}">Techniciens</a>
+    <a href="/admin/utilisateurs?role=admin" class="btn {% if role_filter == 'admin' %}btn-primary{% endif %}">Admins</a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        {% if users %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Matricule</th>
+                    <th>Nom complet</th>
+                    <th>Rôle</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in users %}
+                <tr>
+                    <td>{{ u[0] }}</td>
+                    <td>{{ u[1] }}</td>
+                    <td>{{ u[2] }}</td>
+                    <td>
+                        {% if u[3] == 'admin' %}<span class="badge bg-secondary">Admin</span>
+                        {% elif u[3] == 'tech' %}<span class="badge bg-info">Technicien</span>
+                        {% else %}<span class="badge bg-success">Utilisateur</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if u[3] != 'admin' %}
+                        <form method="post" style="display:inline;"
+                              onsubmit="return confirm('Confirmer la suppression ?');">
+                            <input type="hidden" name="action" value="delete_user">
+                            <input type="hidden" name="user_id" value="{{ u[0] }}">
+                            <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                        </form>
+
+                        <form method="post" action="/admin/reset_password/{{ u[0] }}" style="display:inline;"
+                              onsubmit="return confirm('Réinitialiser le mot de passe ?');">
+                            <button type="submit" class="btn btn-sm btn-warning">Réinitialiser mot de passe</button>
+                        </form>
+                        {% else %}
+                        <em>—</em>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="alert alert-info">Aucun utilisateur trouvé.</div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

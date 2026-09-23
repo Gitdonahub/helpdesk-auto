@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+{% block title %}Administration - TrustSolve{% endblock %}
+{% block content %}
+<h2>Tableau de bord administrateur</h2>
+
+{% if message %}
+<div class="alert alert-success">{{ message }}</div>
+{% endif %}
+
+<!-- ================= SECTION 1 : GÉNÉRATION DE CODES ================= -->
+<div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">1. Générer un code d'invitation technicien</h5>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            <input type="hidden" name="action" value="generate_code">
+            <button type="submit" class="btn btn-primary">Générer un nouveau code</button>
+        </form>
+        {% if new_code %}
+        <div class="alert alert-success mt-3">
+            Nouveau code généré : <strong>{{ new_code }}</strong><br>
+            <small>Transmettez-le au nouveau technicien. Il ne sera plus affiché après rechargement.</small>
+        </div>
+        {% endif %}
+
+        <h6 class="mt-4">Historique des codes</h6>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Code</th>
+                    <th>Utilisé</th>
+                    <th>Technicien</th>
+                    <th>Créé le</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in codes %}
+                <tr>
+                    <td>{{ c[0] }}</td>
+                    <td>{{ c[1] }}</td>
+                    <td>{{ 'Oui' if c[2] else 'Non' }}</td>
+                    <td>{{ c[4] if c[4] else '-' }}</td>
+                    <td>{{ c[3] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- ================= SECTION 2 : LISTE DES TECHNICIENS ================= -->
+<div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">2. Techniciens enregistrés</h5>
+    </div>
+    <div class="card-body">
+        {% if technicians %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Matricule</th>
+                    <th>Nom complet</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for t in technicians %}
+                <tr>
+                    <td>{{ t[0] }}</td>
+                    <td>{{ t[1] }}</td>
+                    <td>{{ t[2] }}</td>
+                    <td>
+                        <form method="post" style="display:inline;"
+                            onsubmit="return confirm('Confirmer la suppression de ce technicien ?');">
+                            <input type="hidden" name="action" value="delete_tech">
+                            <input type="hidden" name="tech_id" value="{{ t[0] }}">
+                            <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="alert alert-info">Aucun technicien enregistré.</div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- ================= SECTION 3 : CONTACTS SUPPORT ================= -->
+<div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">3. Contacts support</h5>
+    </div>
+    <div class="card-body">
+        <h6>Ajouter un contact</h6>
+        <form method="post" class="mb-4">
+            <input type="hidden" name="action" value="add_support">
+            <div class="row">
+                <div class="col-md-4 mb-2">
+                    <label class="form-label">Nom / Équipe</label>
+                    <input type="text" name="name" class="form-control" required>
+                </div>
+                <div class="col-md-4 mb-2">
+                    <label class="form-label">Service / Domaine</label>
+                    <input type="text" name="team" class="form-control" required>
+                </div>
+                <div class="col-md-4 mb-2">
+                    <label class="form-label">Téléphone</label>
+                    <input type="text" name="phone" class="form-control">
+                </div>
+                <div class="col-md-4 mb-2">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control">
+                </div>
+                <div class="col-md-4 mb-2">
+                    <label class="form-label">Secteur</label>
+                    <input type="text" name="sector" class="form-control" placeholder="Ex : Tous">
+                </div>
+                <div class="col-md-4 mb-2">
+                    <label class="form-label">Horaires</label>
+                    <input type="text" name="available_hours" class="form-control" placeholder="Ex : Lun-Ven 8h-18h">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Ajouter</button>
+        </form>
+
+        <h6>Contacts existants</h6>
+        {% if contacts %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Service</th>
+                    <th>Téléphone</th>
+                    <th>Email</th>
+                    <th>Secteur</th>
+                    <th>Horaires</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in contacts %}
+                <tr>
+                    <td>{{ c[0] }}</td>
+                    <td>{{ c[1] }}</td>
+                    <td>{{ c[2] }}</td>
+                    <td>{{ c[3] or '-' }}</td>
+                    <td>{{ c[4] or '-' }}</td>
+                    <td>{{ c[5] or 'Tous' }}</td>
+                    <td>{{ c[6] or '-' }}</td>
+                    <td>
+                        <form method="post" style="display:inline;"
+                            onsubmit="return confirm('Confirmer la suppression de ce contact ?');">
+                            <input type="hidden" name="action" value="delete_support">
+                            <input type="hidden" name="contact_id" value="{{ c[0] }}">
+                            <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="alert alert-info">Aucun contact support enregistré.</div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

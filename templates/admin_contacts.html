@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}Contacts support - TrustSolve{% endblock %}
+{% block content %}
+<h2>Contacts support</h2>
+
+{% if message %}
+<div class="alert alert-success">{{ message }}</div>
+{% endif %}
+
+<div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">Ajouter un contact</h5>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            <input type="hidden" name="action" value="add_support">
+            <div class="row">
+                <div class="col-md-4 mb-2">
+                    <label class="form-label">Nom / Équipe</label>
+                    <input type="text" name="name" class="form-control" required>
+                </div>
+                <div class="col-md-4 mb-2">
+                    <label class="form-label">Service / Domaine</label>
+                    <input type="text" name="team" class="form-control" required>
+                </div>
+                <div class="col-md-4 mb-2">
+                    <label class="form-label">Téléphone</label>
+                    <input type="text" name="phone" class="form-control">
+                </div>
+                <div class="col-md-4 mb-2">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control">
+                </div>
+                <div class="col-md-4 mb-2">
+                    <label class="form-label">Secteur</label>
+                    <input type="text" name="sector" class="form-control" placeholder="Ex : Tous">
+                </div>
+                <div class="col-md-4 mb-2">
+                    <label class="form-label">Horaires</label>
+                    <input type="text" name="available_hours" class="form-control" placeholder="Ex : Lun-Ven 8h-18h">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Ajouter</button>
+        </form>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">Contacts existants</h5>
+    </div>
+    <div class="card-body">
+        {% if contacts %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Service</th>
+                    <th>Téléphone</th>
+                    <th>Email</th>
+                    <th>Secteur</th>
+                    <th>Horaires</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in contacts %}
+                <tr>
+                    <td>{{ c[0] }}</td>
+                    <td>{{ c[1] }}</td>
+                    <td>{{ c[2] }}</td>
+                    <td>{{ c[3] or '-' }}</td>
+                    <td>{{ c[4] or '-' }}</td>
+                    <td>{{ c[5] or 'Tous' }}</td>
+                    <td>{{ c[6] or '-' }}</td>
+                    <td>
+                        <form method="post" style="display:inline;"
+                              onsubmit="return confirm('Confirmer la suppression ?');">
+                            <input type="hidden" name="action" value="delete_support">
+                            <input type="hidden" name="contact_id" value="{{ c[0] }}">
+                            <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="alert alert-info">Aucun contact support enregistré.</div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

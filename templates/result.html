@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}{{ titre }}{% endblock %}
+{% block content %}
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h4 class="mb-0">{{ titre }}</h4>
+    </div>
+    <div class="card-body">
+        <p><strong>Demandeur :</strong> {{ user_name }} ({{ user_sector }})</p>
+        <p><strong>Description :</strong> {{ description }}</p>
+        <h5>Résultat du diagnostic</h5>
+        <div class="alert alert-info">
+            {{ summary|safe }}
+        </div>
+        <p><em>Si le problème persiste, veuillez contacter le support technique.</em></p>
+        <a href="/" class="btn btn-secondary">Retour à l'accueil</a>
+    </div>
+</div>
+{% endblock %}

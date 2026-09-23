@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Ticket #{{ ticket[0] }} - TrustSolve{% endblock %}
+{% block content %}
+    <h1>Ticket #{{ ticket[0] }}</h1>
+    <p><strong>Demandeur :</strong> {{ ticket[2] }} ({{ ticket[3] }})</p>
+    <p><strong>Description :</strong> {{ ticket[4] }}</p>
+    <p><strong>Catégorie :</strong> {{ ticket[5] }}</p>
+    <p><strong>Statut :</strong> {{ ticket[7] }}</p>
+    <p><strong>Date de création :</strong> {{ ticket[8] }}</p>
+
+    <h3>Diagnostic</h3>
+    <div class="card mb-3">
+        <div class="card-body">
+            <p><strong>Type :</strong> {{ category_label }}</p>
+        </div>
+    </div>
+
+    <h3>Résultat du diagnostic</h3>
+    {% if session['role'] == 'tech' %}
+        <!-- Le technicien voit le diagnostic complet -->
+        <pre>{{ ticket[6] }}</pre>
+    {% else %}
+        <!-- L'utilisateur voit uniquement le résumé -->
+        <div class="alert alert-info">
+            {{ summary|safe }}
+        </div>
+        <p><em>Si le problème persiste, veuillez contacter le support technique.</em></p>
+    {% endif %}
+
+    {% if session['role'] == 'tech' %}
+    <h2>Changer le statut</h2>
+    <form action="/ticket/{{ ticket[0] }}/status" method="post">
+        <select name="status">
+            <option value="Ouvert" {% if ticket[7] == 'Ouvert' %}selected{% endif %}>Ouvert</option>
+            <option value="En cours" {% if ticket[7] == 'En cours' %}selected{% endif %}>En cours</option>
+            <option value="Résolu" {% if ticket[7] == 'Résolu' %}selected{% endif %}>Résolu</option>
+            <option value="Fermé" {% if ticket[7] == 'Fermé' %}selected{% endif %}>Fermé</option>
+        </select>
+        <input type="submit" value="Mettre à jour">
+    </form>
+    {% endif %}
+
+    <h2>Historique des statuts</h2>
+    {% for h in history %}
+        <p>{{ h[3] }} a changé le statut de '{{ h[0] }}' à '{{ h[1] }}' le {{ h[2] }}</p>
+    {% endfor %}
+
+    <h2>Discussion</h2>
+    <div class="message-box">
+        {% for msg in messages %}
+            <p><strong>{{ msg[4] }} ({{ msg[1] }})</strong> <small>{{ msg[3] }}</small><br>{{ msg[2] }}</p>
+            <hr>
+        {% endfor %}
+    </div>
+    <form action="/ticket/{{ ticket[0] }}/message" method="post">
+        <textarea name="message" rows="3" cols="50" placeholder="Votre message..." required></textarea><br><br>
+        <input type="submit" value="Envoyer">
+    </form>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Matricules - TrustSolve{% endblock %}
+{% block content %}
+<h2>Registre des matricules (15620 – 15720)</h2>
+<table class="table table-striped">
+    <thead>
+        <tr><th>Matricule</th><th>Statut</th></tr>
+    </thead>
+    <tbody>
+        {% for m, pris in matricules %}
+        <tr>
+            <td>{{ m }}</td>
+            <td>
+                {% if pris %}<span class="badge bg-danger">Pris</span>
+                {% else %}<span class="badge bg-success">Libre</span>{% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

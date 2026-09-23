@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Contacts support - TrustSolve{% endblock %}
+{% block content %}
+<h2>Répertoire du support</h2>
+<p>Voici les contacts auxquels vous pouvez vous adresser en cas de problème.</p>
+
+{% if contacts %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nom / Équipe</th>
+            <th>Service</th>
+            <th>Téléphone</th>
+            <th>Email</th>
+            <th>Secteur</th>
+            <th>Horaires</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for c in contacts %}
+        <tr>
+            <td>{{ c[1] }}</td>
+            <td>{{ c[2] }}</td>
+            <td>{{ c[3] or '-' }}</td>
+            <td>{{ c[4] or '-' }}</td>
+            <td>{{ c[5] or 'Tous' }}</td>
+            <td>{{ c[6] or '-' }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="alert alert-info">Aucun contact support n'est encore enregistré.</div>
+{% endif %}
+<a href="/" class="btn btn-secondary">Retour à l'accueil</a>
+{% endblock %}

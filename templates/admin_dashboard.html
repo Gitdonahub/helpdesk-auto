@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Tableau de bord - TrustSolve{% endblock %}
+{% block content %}
+<h2>Tableau de bord administrateur</h2>
+
+<!-- Cartes de statistiques -->
+<div class="row" style="display:flex; gap:20px; flex-wrap:wrap; margin-bottom:20px;">
+    <div class="card" style="flex:1; min-width:200px;">
+        <div class="card-body">
+            <h6 class="text-muted">Utilisateurs</h6>
+            <h2>{{ stats.users }}</h2>
+        </div>
+    </div>
+    <div class="card" style="flex:1; min-width:200px;">
+        <div class="card-body">
+            <h6 class="text-muted">Techniciens</h6>
+            <h2>{{ stats.techs }}</h2>
+        </div>
+    </div>
+    <div class="card" style="flex:1; min-width:200px;">
+        <div class="card-body">
+            <h6 class="text-muted">Tickets totaux</h6>
+            <h2>{{ stats.tickets_total }}</h2>
+        </div>
+    </div>
+    <div class="card" style="flex:1; min-width:200px;">
+        <div class="card-body">
+            <h6 class="text-muted">Tickets (7 derniers jours)</h6>
+            <h2>{{ stats.tickets_week }}</h2>
+        </div>
+    </div>
+</div>
+
+<!-- Répartition par statut -->
+<div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">Tickets par statut</h5>
+    </div>
+    <div class="card-body">
+        {% if stats.by_status %}
+        <table class="table table-striped">
+            <thead>
+                <tr><th>Statut</th><th>Nombre</th></tr>
+            </thead>
+            <tbody>
+                {% for status, count in stats.by_status.items() %}
+                <tr><td>{{ status }}</td><td>{{ count }}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>Aucun ticket enregistré.</p>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Répartition par catégorie -->
+<div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">Tickets par catégorie</h5>
+    </div>
+    <div class="card-body">
+        {% if stats.by_category %}
+        <table class="table table-striped">
+            <thead>
+                <tr><th>Catégorie</th><th>Nombre</th></tr>
+            </thead>
+            <tbody>
+                {% for cat, count in stats.by_category.items() %}
+                <tr><td>{{ cat }}</td><td>{{ count }}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>Aucun ticket enregistré.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
