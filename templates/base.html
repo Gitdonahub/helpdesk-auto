@@ -58,6 +58,45 @@
     <div class="container">
         {% block content %}{% endblock %}
     </div>
+
+    <script>
+function speakText(elementId, lang = 'fr-FR') {
+    // Vérifier que le navigateur supporte la synthèse vocale
+    if (!('speechSynthesis' in window)) {
+        alert("La synthèse vocale n'est pas supportée par votre navigateur.");
+        return;
+    }
+
+    const element = document.getElementById(elementId);
+    if (!element) return;
+
+    // Récupérer le texte et nettoyer
+    let text = element.innerText || element.textContent;
+
+    // Stopper toute lecture en cours
+    window.speechSynthesis.cancel();
+
+    // Créer un nouvel utterance
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = lang;
+    utterance.rate = 1.0;   // vitesse normale
+    utterance.pitch = 1.0;  // tonalité normale
+    utterance.volume = 1.0; // volume max
+
+    // Choisir une voix française si disponible
+    const voices = window.speechSynthesis.getVoices();
+    const frVoice = voices.find(v => v.lang === 'fr-FR' || v.lang.startsWith('fr'));
+    if (frVoice) utterance.voice = frVoice;
+
+    window.speechSynthesis.speak(utterance);
+}
+
+function stopSpeaking() {
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+    }
+}
+</script>
 </body>
 
 </html>
