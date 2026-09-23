@@ -9,6 +9,17 @@
         <p><strong>Demandeur :</strong> {{ user_name }} ({{ user_sector }})</p>
         <p><strong>Description :</strong> {{ description }}</p>
         <h5>Résultat du diagnostic</h5>
+         <!-- Boutons audio -->
+        <div class="mb-2">
+            <button type="button" class="btn btn-info btn-sm"
+                    onclick="speakText('result-text')">
+                🔊 Écouter le résultat
+            </button>
+            <button type="button" class="btn btn-secondary btn-sm"
+                    onclick="stopSpeaking()">
+                ⏹️ Arrêter
+            </button>
+        </div>
         <div class="alert alert-info">
             {{ summary|safe }}
         </div>
@@ -16,4 +27,13 @@
         <a href="/" class="btn btn-secondary">Retour à l'accueil</a>
     </div>
 </div>
+<!-- Lancement automatique de la lecture -->
+<script>
+    window.addEventListener('load', function() {
+        // Petit délai pour laisser la page se charger complètement
+        setTimeout(function() {
+            speakText('result-text');
+        }, 500);
+    });
+</script>
 {% endblock %}
